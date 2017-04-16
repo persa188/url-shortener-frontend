@@ -21,30 +21,29 @@ var view = (function(){
       invalid url format, url must end with . followed by a top level domain
       (e.x. sanic.ca, google.com, wikipedia.org, https://github.com)
       `;
-      return;
-    }
+    } else {
 
-    fetch('https://'+server+'/api/shorten/', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'mode': 'no-cors'
-            },
-            body: JSON.stringify({
-              url: url
+      fetch('https://'+server+'/api/shorten/', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                url: url
+              })
             })
-          })
-          .then((response) => response.json())
-          .then((responseJson) => {
-            if (responseJson.short_url) responseJson.short_url = responseJson.short_url.replace(/"/g,"");
-            document.getElementById('result').innerHTML = `
-            shortened url: https://${server}/u/${responseJson.short_url}`;
-          })
-          .catch((error) => {
-            console.error(error);
-            document.getElementById('result').innerHTML = `${error}`;
-          });
+            .then((response) => response.json())
+            .then((responseJson) => {
+              if (responseJson.short_url) responseJson.short_url = responseJson.short_url.replace(/"/g,"");
+              document.getElementById('result').innerHTML = `
+              shortened url: https://${server}/u/${responseJson.short_url}`;
+            })
+            .catch((error) => {
+              document.getElementById('result').innerHTML = `${error}`;
+              console.error(error);
+            });
+    }
   }
 
   /*regex validation from
