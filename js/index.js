@@ -42,7 +42,7 @@ var view = (function(){
           })
           .catch((error) => {
             console.error(error);
-            document.getElementById('result').innerHTML = error;
+            document.getElementById('result').innerHTML = `${error}`;
           });
   }
 
