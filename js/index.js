@@ -29,8 +29,8 @@ var view = (function(){
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
+              'mode': 'no-cors'
             },
-            mode: 'no-cors',
             body: JSON.stringify({
               url: url
             })
