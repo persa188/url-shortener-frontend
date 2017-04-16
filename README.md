@@ -3,11 +3,11 @@
 the front-end repo for the url-shortener project
 
 ## API
-the api is hosted [here] (https://api2.sanic.ca) and src code [here] (https://github.com/persa188/urlshortener/)
+the api is hosted [here] (https://api2.sanic.ca) and src code [here](https://github.com/persa188/urlshortener/)
 
 ## Front End (this)
 
-this repo acts as the git-pages site that hosts the web interface for the url-shortener project, accessable [here] (https://url.sanic.ca) 
+this repo acts as the git-pages site that hosts the web interface for the url-shortener project, accessable [here](https://url.sanic.ca) 
 
 ### TODO
 - [ ] style & prettify (ongoing)
