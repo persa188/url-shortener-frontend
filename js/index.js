@@ -2,7 +2,7 @@ var view = (function(){
   "use strict";
 
   var view = {};
-  var server = 'localhost:7070';
+  var server = 'api2.sanic.ca';
 
   document.getElementById('shortener').onsubmit = function(e) {
     e.preventDefault();
