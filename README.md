@@ -3,7 +3,7 @@
 the front-end repo for the url-shortener project
 
 ## API
-the api is hosted [here] (https://api2.sanic.ca) and src code [here](https://github.com/persa188/urlshortener/)
+the api is hosted [here](https://api2.sanic.ca) and src code [here](https://github.com/persa188/urlshortener/)
 
 ## Front End (this)
 
