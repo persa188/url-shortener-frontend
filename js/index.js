@@ -52,16 +52,12 @@ var view = (function(){
 
     if (!isUrlValid(url))
     {
-      document.getElementById('result').innerHTML = `
-      invalid url format, url must end with . followed by a top level domain
-      (e.g. sanic.ca, google.com, wikipedia.org, https://github.com)
-      `;
+      document.getElementById('result').innerHTML = 'invalid url format, url must end with . followed by a top level domain (e.g. sanic.ca, google.com, wikipedia.org, https://github.com)';
     } else {
       view.ajax('Post', 'https://'+server+'/api/shorten/', {url: url}, true, function(err, data) {
         if (err) return console.error(err);
         else {
-          if (data.short_url) document.getElementById('result').innerHTML = `
-          shortened url: https://${server}/u/${data.short_url.replace(/"/g,'')}`;
+          if (data.short_url) document.getElementById('result').innerHTML = `shortened url: https://${server}/u/${data.short_url.replace(/"/g,'')}`;
         }
       });
     }
