@@ -6,14 +6,14 @@ var view = (function(){
 
   var urlInput = document.getElementById('long-url');
 
-  // validate form on the fly
+  validate form on the fly
   urlInput.onkeyup = function() {
     var e = document.querySelector('.shorten-submit');
-    if (isUrlValid(this.value)) {
+//     if (isUrlValid(this.value)) {
       e.classList.remove('disabled');
-    } else {
-      e.classList.add('disabled');
-    }
+//     } else {
+//       e.classList.add('disabled');
+//     }
   };
 
   view.ajax = function(method, url, body, json, callback) {
