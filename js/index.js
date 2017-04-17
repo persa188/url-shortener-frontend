@@ -1,15 +1,50 @@
 var view = (function(){
-  "use strict";
+  'use strict';
 
   var view = {};
   var server = 'api2.sanic.ca';
+
+  var urlInput = document.getElementById('long-url');
+
+  // validate form on the fly
+  urlInput.onkeyup = function() {
+    var e = document.querySelector('.shorten-submit');
+    if (isUrlValid(this.value)) {
+      e.classList.remove('disabled');
+    } else {
+      e.classList.add('disabled');
+    }
+  };
+
+  view.ajax = function(method, url, body, json, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      switch (this.readyState) {
+        case (XMLHttpRequest.DONE):
+          if (this.status === 200) {
+            if (json) return callback(null, JSON.parse(this.responseText));
+            else return callback(null, this.responseText);
+          } else {
+            return callback(this.responseText, null);
+          }
+          break;
+      }
+    };
+    xhr.open(method, url);
+    if (json && body){
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify(body));
+    } else{
+      xhr.send(body);
+    }
+  };
 
   document.getElementById('shortener').onsubmit = function(e) {
     e.preventDefault();
     var url = document.getElementById('long-url').value;
     //auto-add http prefix
     if (!/^(f|ht)tps?:\/\//i.test(url)) {
-      url = "http://" + url;
+      url = 'http://' + url;
     }
     var reqbody = {
       url: url
@@ -19,30 +54,16 @@ var view = (function(){
     {
       document.getElementById('result').innerHTML = `
       invalid url format, url must end with . followed by a top level domain
-      (e.x. sanic.ca, google.com, wikipedia.org, https://github.com)
+      (e.g. sanic.ca, google.com, wikipedia.org, https://github.com)
       `;
     } else {
-
-      fetch('https://'+server+'/api/shorten/', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                url: url
-              })
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {
-              if (responseJson.short_url) responseJson.short_url = responseJson.short_url.replace(/"/g,"");
-              document.getElementById('result').innerHTML = `
-              shortened url: https://${server}/u/${responseJson.short_url}`;
-            })
-            .catch((error) => {
-              document.getElementById('result').innerHTML = `${error}`;
-              console.error(error);
-            });
+      view.ajax('Post', 'https://'+server+'/api/shorten/', {url: url}, true, function(err, data) {
+        if (err) return console.error(err);
+        else {
+          if (data.short_url) document.getElementById('result').innerHTML = `
+          shortened url: https://${server}/u/${data.short_url.replace(/"/g,'')}`;
+        }
+      });
     }
   }
 
